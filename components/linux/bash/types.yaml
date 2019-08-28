@@ -1,0 +1,68 @@
+tosca_definitions_version: alien_dsl_2_0_0
+#
+# Copyright 2019 Bull S.A.S. Atos Technologies - Bull, Rue Jean Jaures, B.P.68, 78340, Les Clayes-sous-Bois, France.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+metadata:
+  template_name: org.ystia.heappe.components.bash
+  template_version: 1.0.0-SNAPSHOT
+  template_author: ystia
+
+description: "Components using HEAppE API called in bash scripts"
+
+imports:
+  - tosca-normative-types:1.0.0-ALIEN20
+
+node_types:
+
+  org.ystia.heappe.components.pub.Command:
+    derived_from: tosca.nodes.SoftwareComponent
+    abstract: true
+    description: >
+      TOSCA component instantiating a HEAppE command template (creating a Job)
+    properties:
+      user:
+        description: User used to connect to HEAppE Middleware
+        type: string
+        required: true
+      password:
+        description: Password used to connect to HEAppE Middleware
+        type: string
+        required: true
+      template_name:
+        description: Name of the Command template to use
+        type: string
+        required: true
+    attributes:
+      command_id:
+        type: string
+        description: >
+          HEAppE job ID - ID of the instantiation of a Command Template
+
+  org.ystia.heappe.components.pub.LaunchJob:
+    derived_from: org.alien4cloud.nodes.Job
+    description: >
+      Component allowing to submit/wait for the end of/cancel a HEAppE Job
+    requirements:
+      - commandToSubmit:
+          capability: tosca.capabilities.Node
+          node: org.ystia.heappe.components.Command
+          relationship: tosca.relationships.DependsOn
+          occurrences: [1, 1]
+    attributes:
+      session_id:
+        type: string
+        description: >
+          ID of the HEAppE session created

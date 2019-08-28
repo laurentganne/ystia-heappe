@@ -1,0 +1,76 @@
+tosca_definitions_version: alien_dsl_2_0_0
+#
+# Copyright 2019 Bull S.A.S. Atos Technologies - Bull, Rue Jean Jaures, B.P.68, 78340, Les Clayes-sous-Bois, France.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+metadata:
+  template_name: org.ystia.heappe.components.pub
+  template_version: 1.0.0-SNAPSHOT
+  template_author: ystia
+
+description: "Public interface types for using HEAppE API components"
+
+imports:
+  - tosca-normative-types:1.0.0-ALIEN20
+
+node_types:
+
+  org.ystia.heappe.components.pub.Command:
+    derived_from: org.ystia.heappe.components.pub.Command
+    description: >
+      TOSCA component instantiating a HEAppE command template (creating a Job)
+    attributes:
+      command_id: { get_operation_output: [SELF, Standard, create, COMMAND_ID] }
+    interfaces:
+      Standard:
+        inputs:
+          USER: {get_property: [SELF, user]}
+          PASSWORD: {get_property: [SELF, password]}
+        create:
+          inputs:
+            TEMPLATE_NAME: {get_property: [SELF, template_name]}
+          implementation: scripts/createCommand.sh
+        delete:
+          implementation: scripts/deleteCommand.sh
+
+  org.ystia.heappe.components.bash.LaunchJob:
+    derived_from: org.alien4cloud.nodes.Job
+    description: >
+      Component allowing to submit/wait for the end of/cancel a HEAppE Job
+    requirements:
+      - commandToSubmit:
+          capability: tosca.capabilities.Node
+          node: org.ystia.heappe.components.Command
+          relationship: tosca.relationships.DependsOn
+          occurrences: [1, 1]
+    attributes:
+      session_id: { get_operation_output: [SELF, tosca.interfaces.node.lifecycle.Runnable, submit, SESSION_ID] }
+    interfaces:
+      tosca.interfaces.node.lifecycle.Runnable:
+        inputs:
+          COMMAND_ID: {get_attribute: [REQ_TARGET, commandToSubmit, command_id]}
+        submit:
+          inputs:
+            USER: {get_property: [REQ_TARGET, commandToSubmit, user]}
+            PASSWORD: {get_property: [REQ_TARGET, commandToSubmit, password]}
+          implementation: scripts/submit_job.sh
+        run:
+          inputs:
+            SESSION_ID: {get_attribute: [SELF, session_id]}
+          implementation: scripts/get_job_status.sh
+        cancel:
+          inputs:
+            SESSION_ID: {get_attribute: [SELF, session_id]}
+          implementation: scripts/cancel_job.sh
