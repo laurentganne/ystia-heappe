@@ -24,15 +24,20 @@ description: "Public interface types for using HEAppE API components"
 
 imports:
   - tosca-normative-types:1.0.0-ALIEN20
+  - alien-base-types:2.2.0-SNAPSHOT
 
 node_types:
 
-  org.ystia.heappe.components.pub.Command:
-    derived_from: tosca.nodes.SoftwareComponent
+  org.ystia.heappe.components.pub.HEAppEJob:
+    derived_from: org.alien4cloud.nodes.Job
     abstract: true
     description: >
-      TOSCA component instantiating a HEAppE command template (creating a Job)
+      HEAppE Job
     properties:
+      heappe_url:
+        description: URL of the HEAppE Middleware service
+        type: string
+        required: true
       user:
         description: User used to connect to HEAppE Middleware
         type: string
@@ -46,30 +51,11 @@ node_types:
         type: string
         required: true
     attributes:
-      command_id:
+      job_id:
         type: string
         description: >
-          HEAppE job ID - ID of the instantiation of a Command Template
-    capabilities:
-      command: org.ystia.heappe.components.pub.capabilities.Command
-  
-  org.ystia.heappe.components.pub.LaunchJob:
-    derived_from: org.alien4cloud.nodes.Job
-    abstract: true
-    description: >
-      Component allowing to submit/wait for the end of/cancel a HEAppE Job
-    requirements:
-      - commandToSubmit:
-          capability: org.ystia.heappe.components.pub.capabilities.Command
-          node: org.ystia.heappe.components.Command
-          relationship: tosca.relationships.DependsOn
-          occurrences: [1, 1]
-    attributes:
+          ID of the HEAppE job created
       session_id:
         type: string
         description: >
           ID of the HEAppE session created
-
-capability_types:
-  org.ystia.heappe.components.pub.capabilities.Command:
-    derived_from: tosca.capabilities.Node
