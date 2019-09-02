@@ -1,31 +1,19 @@
 #!/usr/bin/env bash
 
-
-# Get the value of a given key in a JSON string
-# Expects 2 parameters:
-# - key
-# - JSON string
-getJsonval() {
-	jsonKey=$1
-	jsonContent=$2
-    temp=`echo "$jsonContent" | awk -F"[{,:}]" '{for(i=1;i<=NF;i++){if($i~/\042'$jsonKey'\042/){print $(i+1)}}}' | tr -d '"' | sed -n 1p`
-    echo $temp
-}
-
 echo "Authenticating to HEAppE Middleware"
 
 response=`curl --request POST \
                --insecure \
                --url ${HEAPPE_URL}/heappe/UserAndLimitationManagement/AuthenticateUserPassword \
                --header 'Content-Type: application/json' \
-               --cookie cookies.a4c \
                --silent \
                --data "{\"credentials\": {\"username\": \"$USER\", \"password\": \"$PASSWORD\"}}"`
 
 res=$?
 if [ $res -ne 0 ]
 then
-    echo "Exiting on error authenticating to HEAppE Middleware"
+    echo "Exiting on error $res authenticating to HEAppE Middleware"
+    echo $response
     exit 1
 fi
 
@@ -39,14 +27,14 @@ response=`curl --request POST \
                --insecure \
                --url ${HEAPPE_URL}/heappe/JobManagement/SubmitJob \
                --header 'Content-Type: application/json' \
-               --cookie cookies.a4c \
                --silent \
                --data "{\"createdJobInfoId\": \"$JOB_ID\", \"sessionCode\": \"$SESSION_ID\"}"`
 
 res=$?
 if [ $res -ne 0 ]
 then
-    echo "Exiting on error authenticating to HEAppE Middleware"
+    echo "Exiting on error $res submitting job $JOB_ID to HEAppE Middleware"
+    echo $response
     exit 1
 fi
 
