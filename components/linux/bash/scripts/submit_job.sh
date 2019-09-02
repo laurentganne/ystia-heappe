@@ -7,7 +7,7 @@ response=`curl --request POST \
                --url ${HEAPPE_URL}/heappe/UserAndLimitationManagement/AuthenticateUserPassword \
                --header 'Content-Type: application/json' \
                --silent \
-               --data "{\"credentials\": {\"username\": \"$USER\", \"password\": \"$PASSWORD\"}}"`
+               --data "{\"credentials\": {\"username\": \"$HEAPPE_USER\", \"password\": \"$HEAPPE_PASSWORD\"}}"`
 
 res=$?
 if [ $res -ne 0 ]
@@ -33,10 +33,12 @@ response=`curl --request POST \
 res=$?
 if [ $res -ne 0 ]
 then
-    echo "Exiting on error $res submitting job $JOB_ID to HEAppE Middleware"
+    echo "Exiting on error $res submitting job $JOB_ID to HEAppE Middleware, session $SESSION_ID"
     echo $response
     exit 1
 fi
+
+echo "Submit response: $response"
 
 
 # The orchestrator expects the job ID to be available in TOSCA_JOB_ID env variable

@@ -9,11 +9,12 @@ description: ""
 
 imports:
 - tosca-normative-types:1.0.0-ALIEN20
+- org.ystia.heappe.components.pub:1.0.0-SNAPSHOT
 - org.ystia.heappe.components.bash:1.0.0-SNAPSHOT
 
 topology_template:
   inputs:
-    heappe_url:
+    heappeURL:
       type: string
       required: true
       description: "HEAppE Middleware URL"
@@ -24,15 +25,15 @@ topology_template:
     password:
       type: string
       required: true
-    template_name:
-      type: string
+    jobSpecification:
+      type: org.ystia.heappe.types.JobSpecification
       required: true
-      description: "Name of the command template to use"
+      description: "Job Specification"
   node_templates:
     HEAppEJob:
       type: org.ystia.heappe.components.bash.HEAppEJob
       properties:
-        heappe_url: { get_input: heappe_url }
+        heappeURL: { get_input: heappeURL }
         user: { get_input: user }
         password: { get_input: password }
-        template_name: { get_input: template_name }
+        jobSpecification: { get_input: jobSpecification }

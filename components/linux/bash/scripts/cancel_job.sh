@@ -16,3 +16,5 @@ then
     echo $response
     exit 1
 fi
+
+echo "Job ${TOSCA_JOB_ID} canceled"

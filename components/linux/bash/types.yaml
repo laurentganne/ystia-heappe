@@ -33,16 +33,17 @@ node_types:
     description: >
       HEAppE Job
     attributes:
-      job_id: { get_operation_output: [SELF, Standard, create, JOB_ID] }
+      jobID: { get_operation_output: [SELF, Standard, create, JOB_ID] }
+      sessionID: { get_operation_output: [SELF, tosca.interfaces.node.lifecycle.Runnable, submit, SESSION_ID] }
     interfaces:
       Standard:
         inputs:
-          HEAPPE_URL: {get_property: [SELF, heappe_url]}
-          USER: {get_property: [SELF, user]}
-          PASSWORD: {get_property: [SELF, password]}
+          HEAPPE_URL: {get_property: [SELF, heappeURL]}
+          HEAPPE_USER: {get_property: [SELF, user]}
+          HEAPPE_PASSWORD: {get_property: [SELF, password]}
         create:
           inputs:
-            TEMPLATE_NAME: {get_property: [SELF, template_name]}
+            JOB_SPECIFICATION: {get_property: [SELF, jobSpecification]}
           implementation: scripts/create_job.sh
         # Added a no-op start operation just to have Alien4Cloud change the
         # component state to started
@@ -50,22 +51,22 @@ node_types:
           implementation: scripts/noop.sh
         delete:
           inputs:
-            JOB_ID: {get_attribute: [SELF, job_id]}
+            JOB_ID: {get_attribute: [SELF, jobID]}
           implementation: scripts/delete_job.sh
       tosca.interfaces.node.lifecycle.Runnable:
         inputs:
-          HEAPPE_URL: {get_property: [SELF, heappe_url]}
+          HEAPPE_URL: {get_property: [SELF, heappeURL]}
           JOB_ID: {get_attribute: [SELF, job_id]}
         submit:
           inputs:
-            USER: {get_property: [SELF, user]}
-            PASSWORD: {get_property: [SELF, password]}
+            HEAPPE_USER: {get_property: [SELF, user]}
+            HEAPPE_PASSWORD: {get_property: [SELF, password]}
           implementation: scripts/submit_job.sh
         run:
           inputs:
-            SESSION_ID: { get_operation_output: [SELF, tosca.interfaces.node.lifecycle.Runnable, submit, SESSION_ID] }
+            SESSION_ID: {get_attribute: [SELF, sessionID]}
           implementation: scripts/get_job_status.sh
         cancel:
           inputs:
-            SESSION_ID: { get_operation_output: [SELF, tosca.interfaces.node.lifecycle.Runnable, submit, SESSION_ID] }
+            SESSION_ID: {get_attribute: [SELF, sessionID]}
           implementation: scripts/cancel_job.sh

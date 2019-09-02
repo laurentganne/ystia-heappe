@@ -26,15 +26,107 @@ imports:
   - tosca-normative-types:1.0.0-ALIEN20
   - alien-base-types:2.2.0-SNAPSHOT
 
-node_types:
+data_types:
+  org.ystia.heappe.types.CommandTemplateParameterValue:
+    derived_from: tosca.datatypes.Root
+    properties:
+      commandParameterIdentifier:
+        description: Command parameter identifier
+        type: string
+        required: true
+      parameterValue:
+        description: Command parameter value
+        type: string
+  org.ystia.heappe.types.TaskSpecification:
+    derived_from: tosca.datatypes.Root
+    properties:
+      name:
+        description: Task name
+        type: string
+        required: true
+      commandTemplateId:
+        description: Command template ID
+        type: string
+        required: true
+      templateParameterValues:
+        description: Command template parameters
+        type: list
+        entry_schema:
+          type: org.ystia.heappe.types.CommandTemplateParameterValue
+      minCores:
+        description: Minimum number of cores required
+        type: integer
+        default: 0
+      maxCores:
+        description: Maximum number of cores required
+        type: integer
+        default: 0
+      walltimeLimit:
+        description: Maximum time for the task to run (in seconds)
+        type: integer
+        default: 300
+      standardOutputFile:
+        type: string
+        default: "console_Stdout"
+      standardErrorFile:
+        type: string
+        default: "console_Stderr"
+      progressFile:
+        type: string
+        default: "console_Stdprog"
+      logFile:
+        type: string
+        default: "console_Stdlog"
+  org.ystia.heappe.types.JobSpecification:
+    derived_from: tosca.datatypes.Root
+    properties:
+      name:
+        description: Job name
+        type: string
+        required: true
+      project:
+        description: Accounting project
+        type: string
+        required: true
+      clusterNodeTypeId :
+        description: Cluster node type
+        type: integer
+        required: true
+      tasks :
+        description: Tasks (at leat one task needs to be defined)
+        type: list
+        entry_schema:
+          type: org.ystia.heappe.types.TaskSpecification
+        required: true
+      priority:
+        description: Job priority
+        type: integer
+        default: 4
+      minCores:
+        description: Minimum number of cores required
+        type: integer
+        default: 0
+      maxCores:
+        description: Maximum number of cores required
+        type: integer
+        default: 0
+      waitingLimit:
+        description: Limit for the waiting time in cluster queue (seconds)
+        type: integer
+        default: 600
+      walltimeLimit:
+        description: Maximum time for the job to run (in seconds)
+        type: integer
+        default: 300
 
+node_types:
   org.ystia.heappe.components.pub.HEAppEJob:
     derived_from: org.alien4cloud.nodes.Job
     abstract: true
     description: >
       HEAppE Job
     properties:
-      heappe_url:
+      heappeURL:
         description: URL of the HEAppE Middleware service
         type: string
         required: true
@@ -46,16 +138,16 @@ node_types:
         description: Password used to connect to HEAppE Middleware
         type: string
         required: true
-      template_name:
-        description: Name of the Command template to use
-        type: string
+      jobSpecification:
+        description: Specification of the job to create
+        type: org.ystia.heappe.types.JobSpecification
         required: true
     attributes:
-      job_id:
+      jobID:
         type: string
         description: >
           ID of the HEAppE job created
-      session_id:
+      sessionID:
         type: string
         description: >
           ID of the HEAppE session created

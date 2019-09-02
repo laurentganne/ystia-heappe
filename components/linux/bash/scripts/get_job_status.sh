@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
 
-
-# From https://code.it4i.cz/ADAS/HEAppE/Middleware/blob/new_master/DomainObjects/JobManagement/JobInformation/JobState.cs
-# HEAppE Job statuses are:
-# - Configuring = 1
-# - Submitted = 2
-# - Queued = 4
-# - Running = 8
-# - Finished = 16
-# - Failed = 32
-# - Canceled = 64
 # 
 # Yorc expected Job statuses to be returned in env. variable TOSCA_JOB_STATUS are:
 # - QUEUED: meaning that the job is submitted but didn't started yet.
@@ -17,7 +7,7 @@
 # - COMPLETED: meaning that the job is done successfully.
 # - FAILED: meaning that the job is done but in error.
 
-echo "Getting job $JOB_ID status..."
+echo "Getting job $TOSCA_JOB_ID status..."
 
 # Get the value of a given key in a JSON string
 # Expects 2 parameters:
@@ -32,7 +22,7 @@ getJsonval() {
 
 response=`curl --request POST \
                --insecure \
-               --url ${HEAPPE_URL}//heappe/JobManagement/GetCurrentInfoForJob \
+               --url ${HEAPPE_URL}/heappe/JobManagement/GetCurrentInfoForJob \
                --header 'Content-Type: application/json' \
                --silent \
                --data "{\"submittedJobInfoId\": \"$TOSCA_JOB_ID\", \"sessionCode\": \"$SESSION_ID\"}"`
@@ -45,19 +35,19 @@ then
     exit 1
 fi
 
-heappeJobStatus=`getJsonval status $response`
+heappeJobState=`getJsonval state $response`
 
-# The orchestrator expects the job status to be available in TOSCA_JOB_STATUS env variable
-TOSCA_JOB_STATUS="COMPLETED"
-if [ "$heappeJobStatus" -lt "8" ]; then
+# The orchestrator expects the job state to be available in TOSCA_JOB_STATUS env variable
+TOSCA_JOB_STATUS="FAILED"
+if [ -z "$heappeJobState" ]; then
+   echo "Error: could not get job state for job $TOSCA_JOB_ID session $ $SESSION_ID response $response "
+elif [ "$heappeJobState" -lt "3" ]; then
     TOSCA_JOB_STATUS="QUEUED"
-elif  [ "$heappeJobStatus" -eq "8" ]; then
+elif  [ "$heappeJobState" -eq "3" ]; then
     TOSCA_JOB_STATUS="RUNNING"
-elif  [ "$heappeJobStatus" -eq "16" ]; then
-    TOSCA_JOB_STATUS="RUNNING"
-else
-    TOSCA_JOB_STATUS="FAILED"
+elif  [ "$heappeJobState" -eq "4" ]; then
+    TOSCA_JOB_STATUS="COMPLETED"
 fi
 export TOSCA_JOB_STATUS
 
-echo "Got job $JOB_ID HEAppE status $heappeJobStatus => Yorc status $TOSCA_JOB_STATUS"
+echo "Got job $JOB_ID HEAppE state $heappeJobState => Yorc state $TOSCA_JOB_STATUS"
