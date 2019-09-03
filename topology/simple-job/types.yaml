@@ -31,7 +31,7 @@ topology_template:
       description: "Job Specification"
   node_templates:
     HEAppEJob:
-      type: org.ystia.heappe.components.bash.HEAppEJob
+      type: org.ystia.heappe.components.bash.Job
       properties:
         heappeURL: { get_input: heappeURL }
         user: { get_input: user }

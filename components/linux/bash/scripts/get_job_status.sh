@@ -47,7 +47,9 @@ elif  [ "$heappeJobState" -eq "3" ]; then
     TOSCA_JOB_STATUS="RUNNING"
 elif  [ "$heappeJobState" -eq "4" ]; then
     TOSCA_JOB_STATUS="COMPLETED"
+else
+    echo "Will return job $TOSCA_JOB_ID failed from info: $response"
 fi
 export TOSCA_JOB_STATUS
 
-echo "Got job $JOB_ID HEAppE state $heappeJobState => Yorc state $TOSCA_JOB_STATUS"
+echo "Got job $TOSCA_JOB_ID HEAppE state $heappeJobState => Yorc state $TOSCA_JOB_STATUS"

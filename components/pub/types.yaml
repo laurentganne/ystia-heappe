@@ -64,7 +64,7 @@ data_types:
       walltimeLimit:
         description: Maximum time for the task to run (in seconds)
         type: integer
-        default: 300
+        default: 600
       standardOutputFile:
         type: string
         default: "console_Stdout"
@@ -117,10 +117,10 @@ data_types:
       walltimeLimit:
         description: Maximum time for the job to run (in seconds)
         type: integer
-        default: 300
+        default: 600
 
 node_types:
-  org.ystia.heappe.components.pub.HEAppEJob:
+  org.ystia.heappe.components.pub.Job:
     derived_from: org.alien4cloud.nodes.Job
     abstract: true
     description: >

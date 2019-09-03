@@ -28,8 +28,8 @@ imports:
 
 node_types:
 
-  org.ystia.heappe.components.bash.HEAppEJob:
-    derived_from: org.ystia.heappe.components.pub.HEAppEJob
+  org.ystia.heappe.components.bash.Job:
+    derived_from: org.ystia.heappe.components.pub.Job
     description: >
       HEAppE Job
     attributes:
@@ -56,7 +56,7 @@ node_types:
       tosca.interfaces.node.lifecycle.Runnable:
         inputs:
           HEAPPE_URL: {get_property: [SELF, heappeURL]}
-          JOB_ID: {get_attribute: [SELF, job_id]}
+          JOB_ID: {get_attribute: [SELF, jobID]}
         submit:
           inputs:
             HEAPPE_USER: {get_property: [SELF, user]}
