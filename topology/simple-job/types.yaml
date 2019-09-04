@@ -1,7 +1,7 @@
 tosca_definitions_version: alien_dsl_2_0_0
 
 metadata:
-  template_name: org.ystia.heappe.topology.SimpleJob
+  template_name: org.ystia.heappe.topology.JobExample
   template_version: 1.0.0-SNAPSHOT
   template_author: ystia
 
@@ -37,3 +37,11 @@ topology_template:
         user: { get_input: user }
         password: { get_input: password }
         jobSpecification: { get_input: jobSpecification }
+    ReportUsage:
+      type: org.ystia.heappe.components.bash.ReportUsage
+      requirements:
+        - associatedJob:
+            type_requirement: job
+            node: HEAppEJob
+            capability: tosca.capabilities.Node
+            relationship: org.ystia.heappe.relationships.pub.DependsOnJob

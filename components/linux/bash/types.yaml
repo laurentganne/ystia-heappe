@@ -70,3 +70,18 @@ node_types:
           inputs:
             SESSION_ID: {get_attribute: [SELF, sessionID]}
           implementation: scripts/cancel_job.sh
+  org.ystia.heappe.components.bash.ReportUsage:
+    derived_from: org.ystia.heappe.components.pub.ReportUsage
+    interfaces:
+      Standard:
+        start:
+          implementation: scripts/noop.sh
+      tosca.interfaces.node.lifecycle.Runnable:
+        submit:
+          inputs:
+            HEAPPE_URL: {get_property: [REQ_TARGET, job, heappeURL]}
+            JOB_ID: {get_attribute: [REQ_TARGET, job, jobID]}
+            SESSION_ID: {get_attribute: [REQ_TARGET, job, sessionID]}
+          implementation: scripts/print_usage.sh
+        run: scripts/run_noop.sh
+

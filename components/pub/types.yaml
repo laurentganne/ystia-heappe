@@ -56,11 +56,11 @@ data_types:
       minCores:
         description: Minimum number of cores required
         type: integer
-        default: 0
+        default: 1
       maxCores:
         description: Maximum number of cores required
         type: integer
-        default: 0
+        default: 1
       walltimeLimit:
         description: Maximum time for the task to run (in seconds)
         type: integer
@@ -105,11 +105,11 @@ data_types:
       minCores:
         description: Minimum number of cores required
         type: integer
-        default: 0
+        default: 1
       maxCores:
         description: Maximum number of cores required
         type: integer
-        default: 0
+        default: 1
       waitingLimit:
         description: Limit for the waiting time in cluster queue (seconds)
         type: integer
@@ -151,3 +151,20 @@ node_types:
         type: string
         description: >
           ID of the HEAppE session created
+  org.ystia.heappe.components.pub.ReportUsage:
+    derived_from: org.alien4cloud.nodes.Job
+    abstract: true
+    description: >
+      Prints a report of resources usage of a HEAppEJob
+    requirements:
+      - job:
+          capability: tosca.capabilities.Node
+          node: org.ystia.heappe.components.pub.Job
+          relationship: org.ystia.heappe.relationships.pub.DependsOnJob
+          occurrences: [1, 1]
+
+relationship_types:
+  org.ystia.heappe.relationships.pub.DependsOnJob:
+    derived_from: tosca.relationships.DependsOn
+    description: Relationship between a component and a HEAppE job
+    valid_target_types: [ org.ystia.heappe.components.pub.Job ]
