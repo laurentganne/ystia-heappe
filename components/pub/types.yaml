@@ -151,8 +151,19 @@ node_types:
         type: string
         description: >
           ID of the HEAppE session created
-  org.ystia.heappe.components.pub.ReportUsage:
+  org.ystia.heappe.components.pub.GetFilesJob:
     derived_from: org.alien4cloud.nodes.Job
+    abstract: true
+    description: >
+      Get files produced by a HEAppEJob
+    requirements:
+      - job:
+          capability: tosca.capabilities.Node
+          node: org.ystia.heappe.components.pub.Job
+          relationship: org.ystia.heappe.relationships.pub.DependsOnJob
+          occurrences: [1, 1]
+  org.ystia.heappe.components.pub.ReportComponent:
+    derived_from: tosca.nodes.Root
     abstract: true
     description: >
       Prints a report of resources usage of a HEAppEJob

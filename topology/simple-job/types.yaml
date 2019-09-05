@@ -37,11 +37,50 @@ topology_template:
         user: { get_input: user }
         password: { get_input: password }
         jobSpecification: { get_input: jobSpecification }
-    ReportUsage:
-      type: org.ystia.heappe.components.bash.ReportUsage
+    GetFilesJob:
+      type: org.ystia.heappe.components.bash.GetFilesJob
       requirements:
         - associatedJob:
             type_requirement: job
             node: HEAppEJob
             capability: tosca.capabilities.Node
             relationship: org.ystia.heappe.relationships.pub.DependsOnJob
+    ReportComponent:
+      type: org.ystia.heappe.components.bash.ReportComponent
+      requirements:
+        - associatedJob:
+            type_requirement: job
+            node: HEAppEJob
+            capability: tosca.capabilities.Node
+            relationship: org.ystia.heappe.relationships.pub.DependsOnJob
+  workflows:
+    myWorkflow:
+      steps:
+        HEAppEJob_submit:
+          target: HEAppEJob
+          activities:
+            - call_operation: tosca.interfaces.node.lifecycle.Runnable.submit
+          on_success:
+            - HEAppEJob_run
+        HEAppEJob_run:
+          target: HEAppEJob
+          activities:
+            - call_operation: tosca.interfaces.node.lifecycle.Runnable.run
+          on_success:
+            - ReportComponent_print_usage
+            - GetFilesJob_submit
+        GetFilesJob_submit:
+          target: GetFilesJob
+          activities:
+            - call_operation: tosca.interfaces.node.lifecycle.Runnable.submit
+          on_success:
+            - GetFilesJob_run
+        GetFilesJob_run:
+          target: GetFilesJob
+          activities:
+            - call_operation: tosca.interfaces.node.lifecycle.Runnable.run
+        ReportComponent_print_usage:
+          target: ReportComponent
+          activities:
+            - call_operation: custom.print_usage
+
