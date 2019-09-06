@@ -8,19 +8,19 @@ Abstract types are defined here in [components/pub/types.yaml](../components/pub
 
 A first section `data_types` defines new types that will be used by our components, derived from types defined in [HEAppE Middleware](https://code.it4i.cz/ADAS/HEAppE/Middleware/wikis/home) API.
 
-HEAppE Middleware defines a `Job` type having properties :
+HEAppE Middleware defines a `JobSpecification` type having properties :
 * `minCores`: minimum number of cores required
 * `maxCores`: maximum number of cores required
-* `tasks`: array of task
+* `tasks`: array of `TaskSpecification`
 * ...
 
-A `task` type has these properties :
+A `TaskSpecification` type has these properties :
 * `minCores`: minimum number of cores required
 * `maxCores`: maximum number of cores required
-* `templateParameterValues` : array of commandTemplateParameterValue
+* `templateParameterValues` : array of `CommandTemplateParameterValue`
 * ...
 
-A `commandTemplateParameterValue` is a structure having these properties:
+A `CommandTemplateParameterValue` type is a structure having these properties:
 * `commandParameterIdentifier`: a string identifying a parameter
 * `parameterValue` : a parameter value
 
@@ -40,6 +40,22 @@ The corresponding data type definition for a `commandTemplateParameterValue` def
 ```
 
 Note here that the property `commandParameterIdentifier`  has the attribute `required` set to `true`, while this is not the case of `parameterValue`. You can also use the attribute `default` to specify a default value.
+
+The `TaskSpecification` property `templateParameterValues` which is array of `CommandTemplateParameterValue` is described this way in TOSCA:
+
+```yaml
+  org.ystia.heappe.types.TaskSpecification:
+    derived_from: tosca.datatypes.Root
+    properties:
+      templateParameterValues:
+        description: Command template parameters
+        type: list
+        entry_schema:
+          type: org.ystia.heappe.types.CommandTemplateParameterValue
+```
+
+This is a property of type `list` whose type of elements are provided by the `entry_schema` type.
+
 
 ## Concrete types
 
