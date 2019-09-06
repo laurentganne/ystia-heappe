@@ -14,9 +14,9 @@ The following sections provide a detailed description of the application, its im
 
 * [Description of the application](doc/description.md)
 * [Implementation](doc/implementation.md)
-  * abstract types
-  * concrete types
-  * Topology template
+  * [abstract types](doc/implementation.md#abstract-types)
+  * [concrete types](doc/implementation.md#concrete-types)
+  * [Application template](doc/implementation.md#application-template)
 * Using this template to create and deploy applications in Ystia
   * through the UI
   * through the REST API
