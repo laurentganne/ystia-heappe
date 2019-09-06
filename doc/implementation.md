@@ -5,7 +5,7 @@
 
 In addition to built-in types defined in the YAML specification (string, integer, float, boolean, timestamp) and supported by TOSCA, you can define your own types in a section `data_types` of a TOSCA file.
 
-This is what was done in [components/pub/types.yaml](../components/pub/types.yaml) to have data types that will be used by our components. This data types are directly derived from types defined in [HEAppE Middleware](https://code.it4i.cz/ADAS/HEAppE/Middleware/wikis/home) API.
+This is what was done in [components/pub/types.yaml](../components/pub/types.yaml) to have data types that will be used by our components. The data types are directly derived from types defined in [HEAppE Middleware](https://code.it4i.cz/ADAS/HEAppE/Middleware/wikis/home) API.
 
 HEAppE Middleware defines a `JobSpecification` type having properties :
 * `minCores`: minimum number of cores required
