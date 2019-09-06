@@ -23,6 +23,6 @@ This is what will we do here creating workflow which will like the `run` workflo
 but when the job will be finished, the worflow will in parrallel submit the GetFilesJob and call the print_usage interface of ReportComponent.
 Which gives this graphical representation of the user-defined workflow :
 
-![User workflow](doc/images/workflow.PNG)
+![User workflow](images/workflow.PNG)
 
 Next: [Implementation](implementation.md)
