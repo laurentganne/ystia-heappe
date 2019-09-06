@@ -21,12 +21,3 @@ The following sections provide a detailed description of the application, its im
 * Using this template to create and deploy applications in Ystia
   * through the UI
   * through the REST API
-
-Application template:
-
-![App template](doc/images/appTemplate.PNG)
-
-User-defined workflow:
-
-
-![Custom workflow](doc/images/workflow.PNG)
