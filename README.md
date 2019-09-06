@@ -1,4 +1,4 @@
-# Example of TOSCA application using HEappE Middleware REST API
+# TOSCA application using HEappE Middleware REST API
 
 This repository provides an example of [TOSCA](http://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.2/TOSCA-Simple-Profile-YAML-v1.2.html) application template using [HEappE Middleware](https://code.it4i.cz/ADAS/HEAppE/Middleware/wikis/home) REST API.
 
@@ -12,8 +12,8 @@ Ystia front-end and orchestrator will just have here to execute the application 
 
 The following sections provide a detailed description of the application, its implementation, and how to use it in Ystia
 
-* Description of the application
-* Correponding code
+* [Description of the application](doc/description.md)
+* [Implementation](doc/implementation.md)
   * abstract types
   * concrete types
   * Topology template
