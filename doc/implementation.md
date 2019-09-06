@@ -26,6 +26,7 @@ A `CommandTemplateParameterValue` type is a structure having these properties:
 The corresponding data type definition for a `commandTemplateParameterValue` defined in [components/pub/types.yaml](../components/pub/types.yaml) is:
 
 ```yaml
+data_types:
   org.ystia.heappe.types.CommandTemplateParameterValue:
     derived_from: tosca.datatypes.Root
     properties:
@@ -77,7 +78,40 @@ To show an example of inheritance, this example is defining abstract type. Next 
 
 Other example of abstract types: the orchestrator is providing abstract types for resources (Compute Instance, Block Storage, Network...) of infrastructures it supports, that you can reference in your application template to have a portabke application, and when you will have selected on which location to deploy the application, Alien4Cloud will take care of substituting these abstract infrastucture resource types refernced in your application with concrete types, these concrete types having implementation of standard create/configure/start/stop/delete that the orechestrator wiil execute when running install/uninstall workflows.
 
-Abstract types are defined here in [components/pub/types.yaml](../components/pub/types.yaml).
+Abstract types are defined here in [components/pub/types.yaml](../components/pub/types.yaml), in a section `node_types`.
+
+THe abstract type `Job` defines properties 
+```yaml
+node_types:
+  org.ystia.heappe.components.pub.Job:
+    derived_from: org.alien4cloud.nodes.Job
+    abstract: true
+    description: >
+      HEAppE Job
+    properties:
+      heappeURL:
+        description: URL of the HEAppE Middleware service
+        type: string
+        required: true
+      user:
+        description: User used to connect to HEAppE Middleware
+        type: string
+        required: true
+      password:
+        description: Password used to connect to HEAppE Middleware
+        type: string
+        required: true
+      jobSpecification:
+        description: Specification of the job to create
+        type: org.ystia.heappe.types.JobSpecification
+        required: true
+    attributes:
+      jobID:
+        type: string
+        description: >
+          ID of the HEAppE job created
+```
+
 
 
 
