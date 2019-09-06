@@ -4,7 +4,7 @@ To show an example of inheritance, the implementation is providing abstract type
 An application template (*topology template* in TOSCA terminology) is also provided.
 
 ## Abstract types
-Abstract types are defined in [components/pub/types.yaml](../components/pub/types.yaml).
+Abstract types are defined here in [components/pub/types.yaml](../components/pub/types.yaml).
 
 A first section `data_types` defines new types that will be used by our components, derived from types defined in [HEAppE Middleware](https://code.it4i.cz/ADAS/HEAppE/Middleware/wikis/home) API.
 
@@ -39,7 +39,7 @@ The corresponding data type definition for a `commandTemplateParameterValue` def
         type: string
 ```
 
-Note here that the property `commandParameterIdentifier`  has the attribute `required` set to `true`, while this is not the case of `parameterValue`. You can also used the attribute `default` to specify a default value.
+Note here that the property `commandParameterIdentifier`  has the attribute `required` set to `true`, while this is not the case of `parameterValue`. You can also use the attribute `default` to specify a default value.
 
 ## Concrete types
 
