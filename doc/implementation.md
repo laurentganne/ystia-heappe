@@ -73,7 +73,9 @@ Similarly, the `JobSpecification` type property `tasks` which is array of `TaskS
 
 ## Abstract types
 
-To show an example of inheritance, the implementation is providing abstract types for the components, and concrete types inheriting from these abstract components.
+To show an example of inheritance, this example is defining abstract type. Next section will describe concrete types inheriting from these abstract components.
+
+Other example of abstract types: the orchestrator is providing abstract types for infrastructure resources (Compute Instance, Block Storage, Network...) that you can reference in your application template to have a portabke application, and when you will have selected on which location to deploy the application, Alien4Cloud will take care of substituting these abstract infrastucture resource types refernced in your application with concrete types, these concrete types having implementation of standard create/configure/start/stop/delete that the orechestrator wiil execute when running install/uninstall workflows.
 
 Abstract types are defined here in [components/pub/types.yaml](../components/pub/types.yaml).
 
