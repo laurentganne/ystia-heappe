@@ -183,7 +183,7 @@ Then the abstract type `ReportComponent` is declared. It has the same requiremen
 
 Concrete types provide an implementation of abstract types described above. These types are defined in [components/linux/bash/types.yaml](../components/linux/bash/types.yaml), in a section `node_types`.
 
-Interfaces will be implemented using bash scripts here. You can find example of ansible playbooks in the [Ystia Forge](https://github.com/ystia/forge/tree/develop/org/ystia), for example these [plyabooks](https://github.com/ystia/forge/tree/develop/org/ystia/traefik/ansible-linux/playbooks) implementing a Træfik component (HTTP reverse proxy and load balancer). 
+Interfaces will be implemented using bash scripts here. You can find example of ansible playbooks in the [Ystia Forge](https://github.com/ystia/forge/tree/develop/org/ystia), for example these [playbooks](https://github.com/ystia/forge/tree/develop/org/ystia/traefik/ansible-linux/playbooks) implementing a Træfik component (HTTP reverse proxy and load balancer). 
 
 The concrete type `Job` derives from is parent abstract type.
 
