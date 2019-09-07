@@ -118,7 +118,9 @@ data_types:
         description: Maximum time for the job to run (in seconds)
         type: integer
         default: 600
-
+    capabilities:
+      heappejob:
+        type: org.ystia.heappe.capabilities.pub.HeappeJob
 node_types:
   org.ystia.heappe.components.pub.Job:
     derived_from: org.alien4cloud.nodes.Job
@@ -158,7 +160,7 @@ node_types:
       Get files produced by a HEAppEJob
     requirements:
       - job:
-          capability: tosca.capabilities.Node
+          capability: org.ystia.heappe.capabilities.pub.HeappeJob
           node: org.ystia.heappe.components.pub.Job
           relationship: org.ystia.heappe.relationships.pub.DependsOnJob
           occurrences: [1, 1]
@@ -169,11 +171,17 @@ node_types:
       Prints a report of resources usage of a HEAppEJob
     requirements:
       - job:
-          capability: tosca.capabilities.Node
+          capability: org.ystia.heappe.capabilities.pub.HeappeJob
           node: org.ystia.heappe.components.pub.Job
           relationship: org.ystia.heappe.relationships.pub.DependsOnJob
           occurrences: [1, 1]
 
+capability_types:
+  org.ystia.heappe.capabilities.pub.HeappeJob:
+    derived_from: tosca.capabilities.Node
+    description: >
+      A capability fulfilling requirements of a node requiring to be
+      associated with a HEAppE Job.
 relationship_types:
   org.ystia.heappe.relationships.pub.DependsOnJob:
     derived_from: tosca.relationships.DependsOn
