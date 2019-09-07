@@ -118,9 +118,6 @@ data_types:
         description: Maximum time for the job to run (in seconds)
         type: integer
         default: 600
-    capabilities:
-      heappejob:
-        type: org.ystia.heappe.capabilities.pub.HeappeJob
 node_types:
   org.ystia.heappe.components.pub.Job:
     derived_from: org.alien4cloud.nodes.Job
@@ -153,6 +150,9 @@ node_types:
         type: string
         description: >
           ID of the HEAppE session created
+    capabilities:
+      heappejob:
+        type: org.ystia.heappe.capabilities.pub.HeappeJob
   org.ystia.heappe.components.pub.GetFilesJob:
     derived_from: org.alien4cloud.nodes.Job
     abstract: true
