@@ -125,7 +125,7 @@ node_types:
 
 ```
 
-This capability is defined later in this file. A capability can have as well properties and attributes, here for this example there is no such need :
+This capability is defined later in this file in section `capability_types`. A capability can have as well properties and attributes, here for this example there is no such need :
 
 ```yaml
 capability_types:
@@ -136,7 +136,48 @@ capability_types:
       associated with a HEAppE Job.
 ```
 
+Then, the abstract type `GetFilesJob` with one requirement: it has to be associated to one job :
+```yaml
+  org.ystia.heappe.components.pub.GetFilesJob:
+    derived_from: org.alien4cloud.nodes.Job
+    abstract: true
+    description: >
+      Get files produced by a HEAppEJob
+    requirements:
+      - job:
+          capability: org.ystia.heappe.capabilities.pub.HeappeJob
+          node: org.ystia.heappe.components.pub.Job
+          relationship: org.ystia.heappe.relationships.pub.DependsOnJob
+          occurrences: [1, 1]
+```
 
+This component here has no properties or attributes, although it needs to known the job ID and the HEAppE middleware URL. We will see when describing the concrete type derived from this abstract type, that we will be able to get these values from the associated `Job` properties and attributes.
+It is referencing a relationship `org.ystia.heappe.relationships.pub.DependsOnJob`. This relationship is defined later in this file in section `relationship_types`. As we saw previsouly, operations can be specified in a relationship to be executed on the source or on the target. Here we just define the expected target type of the relationship:
+
+```yaml
+relationship_types:
+  org.ystia.heappe.relationships.pub.DependsOnJob:
+    derived_from: tosca.relationships.DependsOn
+    description: Relationship between a component and a HEAppE job
+    valid_target_types: [ org.ystia.heappe.components.pub.Job ]
+```
+
+
+Then the abstract type `ReportComponent` is declared. It has the same requirement as `GetFilesJob` to be associated with one job, but here  `ReportComponent` is not a job, it is derived from `tosca.nodes.Root`, so it won't implemented job interfaces submit, run, cancel. We will see later that its concrete type will implement a custom interface:
+
+```yaml
+  org.ystia.heappe.components.pub.ReportComponent:
+    derived_from: tosca.nodes.Root
+    abstract: true
+    description: >
+      Prints a report of resources usage of a HEAppEJob
+    requirements:
+      - job:
+          capability: org.ystia.heappe.capabilities.pub.HeappeJob
+          node: org.ystia.heappe.components.pub.Job
+          relationship: org.ystia.heappe.relationships.pub.DependsOnJob
+          occurrences: [1, 1]
+```
 
 ## Concrete types
 
