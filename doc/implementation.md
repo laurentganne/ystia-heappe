@@ -80,7 +80,12 @@ Other example of abstract types: the orchestrator is providing abstract types fo
 
 Abstract types are defined here in [components/pub/types.yaml](../components/pub/types.yaml), in a section `node_types`.
 
-THe abstract type `Job` defines properties 
+The abstract type `Job` derives from the parent type `org.alien4cloud.nodes.Job` which is a component with additional interfaces corresponding to a job submit, run, cancel, as seen previously.
+And this type `Job` defines:
+* properties, which are configured by the user and won't change at runtime
+* attributes, which will be set at runtime, like here the job ID that will return by HEAppe middleware once the job will be created
+* a capability, that will allow to build a relationship between components having a requiremnent to be associated wih a HEAppE job, and this component having this capability
+
 ```yaml
 node_types:
   org.ystia.heappe.components.pub.Job:
@@ -110,8 +115,26 @@ node_types:
         type: string
         description: >
           ID of the HEAppE job created
+      sessionID:
+        type: string
+        description: >
+          ID of the HEAppE session created
+    capabilities:
+      heappejob:
+        type: org.ystia.heappe.capabilities.pub.HeappeJob
+
 ```
 
+This capability is defined later in this file. A capability can have as well properties and attributes, here for this example there is no such need :
+
+```yaml
+capability_types:
+  org.ystia.heappe.capabilities.pub.HeappeJob:
+    derived_from: tosca.capabilities.Root
+    description: >
+      A capability fulfilling requirements of a node requiring to be
+      associated with a HEAppE Job.
+```
 
 
 
