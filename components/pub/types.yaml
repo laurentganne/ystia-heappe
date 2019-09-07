@@ -178,7 +178,7 @@ node_types:
 
 capability_types:
   org.ystia.heappe.capabilities.pub.HeappeJob:
-    derived_from: tosca.capabilities.Node
+    derived_from: tosca.capabilities.Root
     description: >
       A capability fulfilling requirements of a node requiring to be
       associated with a HEAppE Job.
