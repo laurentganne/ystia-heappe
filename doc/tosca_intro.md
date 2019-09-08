@@ -32,6 +32,7 @@ This specification defines that this root type has a set of [standard interfaces
 You can find the corresponding normative types implementation in the orchestrator code at [data/tosca/normative-types.yml](https://github.com/ystia/yorc/blob/develop/data/tosca/normative-types.yml).
 
 For example, the Ystia orchestrator definition of the Root node type with its standard interfaces as described in the TOSCA specification :
+
 ```yaml
 node_types:
   tosca.nodes.Root:
@@ -63,5 +64,40 @@ node_types:
           description: Standard lifecycle delete operation.
 ```
 
+You can see above that the Root Node Type is exposing a capability called `feature`, and is expressing a requirement `dependency`that can be fulfilled by a given capability type from a given node types through a given relationship type.
+
+This capability and requirement described in the Root Node Type will be inherited by any type derived from the Root Node Type, and will allow you to create a relationship between two different node templates in your topology template.
+
+You will also be able to add to the node types you will create, other capabilites of your own capability types, other requirements and other relationships of your own relationship type.
+ 
+Similarly to standard interfaces (create, configure, etc...) defined on a Node Type, standard interfaces are defined in a Relationship, that will allow you to run operation depending on the state of the source or the target of the relationship.
+The definition of the Root Relationship Type provides this definition for interfaces that can be associated to a relationship :
+
+```yaml
+relationship_types:
+  tosca.relationships.Root:
+    description: The TOSCA root Relationship Type all other TOSCA base Relationship Types derive from
+    ...
+    interfaces:
+        tosca.interfaces.relationship.Configure:
+          description: >
+            The lifecycle interfaces define the essential, normative operations that each TOSCA Relationship Types may support.
+          pre_configure_source:
+            description: Operation to pre-configure the source endpoint.
+          pre_configure_target:
+            description: Operation to pre-configure the target endpoint.
+          post_configure_source:
+            description: Operation to post-configure the source endpoint.
+          post_configure_target:
+            description: Operation to post-configure the target endpoint.
+          add_target:
+            description: Operation to notify the source node of a target node being added via a relationship.
+          add_source:
+            description: Operation to notify the target node of a source node which is now available via a relationship.
+          remove_target:
+            description: Operation to notify the source node of a target node being removed from a relationship.
+          remove_source:
+            description: Operation to notify the target node of a source node being removed from a relationship.
+```
 
 Next: [Description of the application](description.md)
