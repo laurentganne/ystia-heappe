@@ -171,13 +171,14 @@ Similarly for topolgy templates containing jobs, implementing the interfaces sub
 We mentioned above keywords like **SELF**, **SOURCE**, **TARGET** in functions to reference a node template.
 Ystia adds the keyword **REQ_TARGET** to reference the target of a guven requirement. A concrete usage of this keyword will be provided in the example described later in this documentation.
 
-## Additonal documentation
+## Documentation
 
 To get more details, you can read the following documents:
 * [TOSCA specification](https://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.2/os/TOSCA-Simple-Profile-YAML-v1.2-os.html#DEFN_TYPE_ITFC_NODE_LIFECYCLE_STANDARD)
 * [Alien4Cloud TOSCA usage guide](http://alien4cloud.github.io/#/documentation/2.1.0/devops_guide/dev_ops_guide.html)
 * [Alien4Cloud step by step guide writing your own component](http://alien4cloud.github.io/#/documentation/2.1.0/devops_guide/design_tutorial/tutorials_component_design.html)
 * [Ystia Orchestrator TOSCA support documentation](https://yorc.readthedocs.io/en/latest/tosca.html)
+* [Examples of TOSCA components and applications in Ystia Forge](https://github.com/ystia/forge/tree/develop/org/ystia)
 
 
 Next: [Description of the application](description.md)
