@@ -16,6 +16,8 @@ The following sections provide first an introduction to TOSCA, then a detailed d
   * [Specification](doc/tosca_intro.md#specification)
   * [Extensions brought by Ystia](doc/tosca_intro.md#tosca-extensions-brought-by-ystia)
     * [Jobs](doc/tosca_intro.md#jobs)
+    * [Standard workflows automatic generation](doc/tosca_intro.md#standard-workflows-automatic-generation)
+    * [Additional keyword](doc/tosca_intro.md#additional-keyword)
 * [Description of the application](doc/description.md)
 * [Implementation](doc/implementation.md)
   * [data types](doc/implementation.md#data-types)
