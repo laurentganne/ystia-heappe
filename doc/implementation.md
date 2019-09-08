@@ -185,7 +185,96 @@ Concrete types provide an implementation of abstract types described above. Thes
 
 Interfaces will be implemented using bash scripts here. You can find example of ansible playbooks in the [Ystia Forge](https://github.com/ystia/forge/tree/develop/org/ystia), for example these [playbooks](https://github.com/ystia/forge/tree/develop/org/ystia/traefik/ansible-linux/playbooks) implementing a Træfik component (HTTP reverse proxy and load balancer). 
 
-The concrete type `Job` derives from is parent abstract type.
+The concrete type `Job` we define here derives from is parent abstract type. It inherits properties, attributes, capabilites defined in its parent types and provide imeplementations for standard interfaces of a TOSCA componet (create/configure/start/stop/delete) and interfaces associated to a Job (submit/run/cancel).
+We see here that the definition describes of the attributes jobID and sessionID will be set at runtime :
+
+```yaml
+  org.ystia.heappe.components.bash.Job:
+    derived_from: org.ystia.heappe.components.pub.Job
+    description: >
+      HEAppE Job
+    tags:
+      icon: /images/job.png
+    attributes:
+      jobID: { get_operation_output: [SELF, Standard, create, JOB_ID] }
+      sessionID: { get_operation_output: [SELF, tosca.interfaces.node.lifecycle.Runnable, submit, SESSION_ID] }
+```
+ 
+The TOSCA function `get_operation_output` instructs the Ystia orchestrator Yorc to retrieve a value at the end of a operation. In order to allow Yorc to retrieve those values, it is expected that the interface implementation will, depending on the language implementation :
+ * in Bash scripts, export a variable named as the output variable (case sensitive)
+ * in Python scripts, define a global variable named as the output variable (case sensitive)
+ * in Ansible playbooks, set a fact named as the output variable (case sensitive)
+ 
+ So here, it expected that the bash implemetation we provide for the standard interface `create`, will export a variable `JOB_ID`. And the badh implementation of the job interface submit will export a variable `SESSION_ID`.
+ Then we describe which interfaces are implemented by our component. Here for the standard interfaces :
+ 
+```yaml
+    interfaces:
+      Standard:
+        inputs:
+          HEAPPE_URL: {get_property: [SELF, heappeURL]}
+          HEAPPE_USER: {get_property: [SELF, user]}
+          HEAPPE_PASSWORD: {get_property: [SELF, password]}
+        create:
+          inputs:
+            JOB_SPECIFICATION: {get_property: [SELF, jobSpecification]}
+          implementation: scripts/create_job.sh
+        # Added a no-op start operation just to have Alien4Cloud change the
+        # component state to started
+        start:
+          implementation: scripts/noop.sh
+        delete:
+          inputs:
+            JOB_ID: {get_attribute: [SELF, jobID]}
+          implementation: scripts/delete_job.sh
+```
+
+We can see above that the create interface is implemented by script [scripts/create_job.sh](../components/scripts/create_job.sh)
+
+Then similarly, we describe how job interfaces are implemented:
+
+```yaml
+      tosca.interfaces.node.lifecycle.Runnable:
+        inputs:
+          HEAPPE_URL: {get_property: [SELF, heappeURL]}
+          JOB_ID: {get_attribute: [SELF, jobID]}
+        submit:
+          inputs:
+            HEAPPE_USER: {get_property: [SELF, user]}
+            HEAPPE_PASSWORD: {get_property: [SELF, password]}
+          implementation: scripts/submit_job.sh
+        run:
+          inputs:
+            SESSION_ID: {get_attribute: [SELF, sessionID]}
+          implementation: scripts/get_job_status.sh
+        cancel:
+          inputs:
+            SESSION_ID: {get_attribute: [SELF, sessionID]}
+          implementation: scripts/cancel_job.sh
+```
+
+We find then in this same file [components/linux/bash/types.yaml](../components/linux/bash/types.yaml), the definition of the concrete type for the ReportComponent, which is not a job, so here it is just implementing standard interfaces :
+```yaml
+  org.ystia.heappe.components.bash.ReportComponent:
+    derived_from: org.ystia.heappe.components.pub.ReportComponent
+    tags:
+      icon: /images/print.png
+    interfaces:
+      Standard:
+        start:
+          implementation: scripts/noop.sh
+      custom:
+        print_usage:
+          inputs:
+            HEAPPE_URL: {get_property: [REQ_TARGET, job, heappeURL]}
+            JOB_ID: {get_attribute: [REQ_TARGET, job, jobID]}
+            SESSION_ID: {get_attribute: [REQ_TARGET, job, sessionID]}
+          implementation: scripts/print_usage.sh
+```
+
+You see here that the custom interface `print_usage` implementation is expecting input parameters like the HEAppE middleware URL and the Job ID for which it needs to provide a usage report.
+These parameter values are retrieved by the orchestrator Yorc using the TOSCA operation `get_property` or `get_attribute` with the first parameter `REQ_TARGET`. This parameter `REQ_TARGET` is an extension to TOSCA that is supported by Alien4Cloud and Yorc to easily retrieve properties or attributes of a target to which our component is associated through a requirement and a relationship.
+Here `ReportComponent` parent type declared a requirement named `job` to describe this component has to be associated through a relationship to a `HEAppEJob`, and `get_property: [REQ_TARGET, job, heappeURL]`means Yorc will have to get the value of the property `heappeURL` of the associated `HEAppEJob`.
 
 
 ## Application template
