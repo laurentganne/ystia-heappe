@@ -18,6 +18,7 @@ The following sections provide first an introduction to TOSCA, then a detailed d
     * [Jobs](doc/tosca_intro.md#jobs)
     * [Standard workflows automatic generation](doc/tosca_intro.md#standard-workflows-automatic-generation)
     * [Additional keyword](doc/tosca_intro.md#additional-keyword)
+  * [Documentation](doc/tosca_intro.md#documentation)
 * [Description of the application](doc/description.md)
 * [Implementation](doc/implementation.md)
   * [data types](doc/implementation.md#data-types)
