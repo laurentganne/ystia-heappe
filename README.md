@@ -10,8 +10,9 @@ Its capabilities can also be extended through a plugin mechanism, where you can 
 But here with this the example, this a very lightweight implementation without plugin extension. So here, the TOSCA components provide their implementation on how to create and submit a job, using directly HEAppE Middleware REST APIs.
 Ystia front-end and orchestrator will just have here to execute the application workflows.
 
-The following sections provide a detailed description of the application, its implementation, and how to use it in Ystia
+The following sections provide first an introduction to TOSCA, then a detailed description of the application, its implementation, and how to use it in Ystia:
 
+* [Introduction to TOSCA](doc/tosca_intro.md)
 * [Description of the application](doc/description.md)
 * [Implementation](doc/implementation.md)
   * [data types](doc/implementation.md#data-types)
