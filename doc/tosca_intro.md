@@ -102,6 +102,24 @@ relationship_types:
             description: Operation to notify the target node of a source node being removed from a relationship.
 ```
 
+## Properties and Attributes
+
+Node types, capability types, relationship types, interfaces described above can have associated properties and attributes.
+
+A property is provided a value defined before the application is deployed.
+While an attribute will have its value set by the orchestrator at runtime.
+
+To assign a value to a property or an attribute, TOSCA specification is introducing TOSCA functions that an orchestrator has to support, this is a short description here, the example described later will show concrete usages of of these functions: 
+* **get_input** to get the value of an input parameter of the Topology Template
+* **get_property** to get the value of a property of a given node template, or one of it capability/relationship property. The following Keywords can also be used to reference the entity :
+  * **SELF** for the entity holding this function,
+  * **HOST** for one of the hosts (in the hosted-on hierarchy) of the entity holding this function,
+  * **SOURCE**, **TARGET** respectively for the source or the target entity in case of a relationship
+* **get_attribute** equivalent of get_property for attributes
+* **get_operation_output** to retrieve the output of an interface execution, our example will show a concrete example of this to retrive the Job ID from the HEAppeJob create interface output
+
+See additional details in the [Ystia Orchestrator documentation](https://yorc.readthedocs.io/en/latest/tosca.html).
+
 ## TOSCA extensions brought by Ystia
 
 ### Jobs
@@ -150,6 +168,15 @@ Similarly for topolgy templates containing jobs, implementing the interfaces sub
 
 ### Additional keyword
 
+We mentioned above, keywords like SELF, SOURCE, TARGET, 
+
+## Additonal documentation
+
+To get more details, you can read the following documents:
+* [TOSCA specification](https://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.2/os/TOSCA-Simple-Profile-YAML-v1.2-os.html#DEFN_TYPE_ITFC_NODE_LIFECYCLE_STANDARD)
+* [Alien4Cloud TOSCA usage guide](http://alien4cloud.github.io/#/documentation/2.1.0/devops_guide/dev_ops_guide.html)
+* [Alien4Cloud step by step guide writing your own component](http://alien4cloud.github.io/#/documentation/2.1.0/devops_guide/design_tutorial/tutorials_component_design.html)
+* [Ystia Orchestrator TOSCA support documentation](https://yorc.readthedocs.io/en/latest/tosca.html)
 
 
 Next: [Description of the application](description.md)
