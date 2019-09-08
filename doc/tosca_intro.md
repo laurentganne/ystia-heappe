@@ -8,6 +8,6 @@ It enables portability and automated management across cloud providers regardles
 
 The following figure explains how the core concepts work together:
 
-![App template](images/tosca.PNG)
+![TOSCA figure](images/tosca.png)
 
 Next: [Description of the application](description.md)
