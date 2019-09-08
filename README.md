@@ -5,9 +5,9 @@ This repository provides an example of [TOSCA](http://docs.oasis-open.org/tosca/
 This example can be uploaded/instantiated in [Alien4Cloud](http://alien4cloud.github.io/index.html), then deployed by the [Ystia Orchestrator](https://github.com/ystia/yorc/blob/develop/README.md) on HPC clusters managed by the HEappE Middleware.
 
 The orchestrator has a built-in support for the deployment of applications on Google Cloud, AWS, OpenStack, SLURM, Kubernetes, Host Pools...
-Its capabilities can also be extended through a plugin mechanism, where you can add the support for a new type of infrastructure with associated resources that the Orchestrator can create on demand.
+Its capabilities can also be extended through a plugin mechanism, where you can add the support for a new type of infrastructure with associated resources that the Orchestrator can create on demand. For example, a plugin could provide a HEAppe Job resource, bringing to the orchestator the ability to create such job.
 
-But here, the example here shows a very lightweight implementation without plugin extension, were TOSCA components use directly HEAppE Middleware REST APIs.
+But here with this the example, this a very lightweight implementation without plugin extension. So here, the TOSCA components provide their implementation on how to create and submit a job, using directly HEAppE Middleware REST APIs.
 Ystia front-end and orchestrator will just have here to execute the application workflows.
 
 The following sections provide a detailed description of the application, its implementation, and how to use it in Ystia
