@@ -168,7 +168,8 @@ Similarly for topolgy templates containing jobs, implementing the interfaces sub
 
 ### Additional keyword
 
-We mentioned above, keywords like SELF, SOURCE, TARGET, 
+We mentioned above keywords like **SELF**, **SOURCE**, **TARGET** in functions to reference a node template.
+Ystia adds the keyword **REQ_TARGET** to reference the target of a guven requirement. A concrete usage of this keyword will be provided in the example described later in this documentation.
 
 ## Additonal documentation
 
