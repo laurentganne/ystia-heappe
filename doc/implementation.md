@@ -229,7 +229,9 @@ The TOSCA function `get_operation_output` instructs the Ystia orchestrator Yorc 
           implementation: scripts/delete_job.sh
 ```
 
-We can see above that the create interface is implemented by script [scripts/create_job.sh](../components/scripts/create_job.sh)
+We can see above that the create interface is implemented by script [scripts/create_job.sh](../components/linux/bash/scripts/create_job.sh) taking in input the specification of the job to create, which is a property of this component (TOSCA keywork `SELF`) as this property is declared in the parent abstract type, as we saw above.
+This script [scripts/create_job.sh](../components/linux/bash/scripts/create_job.sh) will use curl commands to authenticate and create the job, then will export the value of the created job id in the environment variable `export JOB_ID`, so that it can be exposed as an attribute of this component like we saw above.
+
 
 Then similarly, we describe how job interfaces are implemented:
 
