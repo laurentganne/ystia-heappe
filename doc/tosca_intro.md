@@ -104,6 +104,35 @@ relationship_types:
 
 ## TOSCA extensions brought by Ystia
 
+### Jobs
+
+In addition to the standard lifecycle interfaces defined by TOSCA specification: create, configure, start... Ystia has extended TOSCA to support the lifecycle of a job.
+
+A new interface `tosca.interfaces.node.lifecycle.Runnable` has been added with these interfaces:
+* **submit** submits a job to a Job Scheduler, generally at the end of the submit we got a job identifier
+* **run** asynchronous operation called periodically to check the job status, until the job is done (success or failure)
+* **cancel** allows to cancel a submitted job.
+
+As this is an extension to TOSCA, this definition is not found in [data/tosca/normative-types.yml](https://github.com/ystia/yorc/blob/develop/data/tosca/normative-types.yml) like ofr the normative types described in the previous section.
+It is defined at [data/tosca/yorc-types.yml](https://github.com/ystia/yorc/blob/develop/data/tosca/yorc-types.yml)
+The root type of a Job from which we will inherit in the Job type we will define for our example application described in next page is `org.alien4cloud.nodes.Job`:
+
+```yaml
+  org.alien4cloud.nodes.Job:
+    abstract: true
+    derived_from: tosca.nodes.Root
+    description: >
+      A job is a component that has a run operation.
+    interfaces:
+      tosca.interfaces.node.lifecycle.Runnable:
+        submit:
+          description: Submit a job to an engine.
+        run:
+          description: Monitor a submitted job for completion.
+        cancel:
+          description: Cancel a submitted job.
+```
+
 ### Standard Workflows automatic generation
 
 The specification defines two standard workflows :
@@ -113,12 +142,14 @@ The specification defines two standard workflows :
 Ystia adds 2 additional default workflows:
   * **stop** used in conjunction with the start workflow to stop all components a topology (for maintenance purpose for example).
   * **start** sed in conjunction with the stop workflow to start all components of a topology.
+  
 
-All these standard workflows will be automatically generated for you by Alien4Cloud, that will create workflow steps calling the standard interfaces of the components you have implemented (create/configure/start for the install workflow, stop/delete for the uninstall workflow), dependencies between steps being set according to the relationships between node templates that you have defined in your topology template.
+All these standard workflows will be automatically generated for you by Alien4Cloud, that will create workflow steps calling the standard interfaces of the components you have implemented (create/configure/start for the install workflow, stop/delete for the uninstall workflow, submit/run for the run workflow of Jobs), dependencies between steps being set according to the relationships between node templates that you have defined in your topology template.
+
+Similarly for topolgy templates containing jobs, implementing the interfaces submit/run/cancel that Ystia defines as a TOSCA extension, a **run** workflow will be automatically generated, chaining submit/run interfaces of each Job according to the relationships defined between these Jobs.
 
 ### Additional keyword
 
-### Jobs
 
 
 Next: [Description of the application](description.md)
