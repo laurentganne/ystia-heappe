@@ -1,5 +1,7 @@
 # Introduction to TOSCA
 
+## Specification
+
 [TOSCA](https://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.2/os/TOSCA-Simple-Profile-YAML-v1.2-os.html) (Topology
 and Orchestration Specification for Cloud Applications) is a standard allowing to provide a model for an application, its components, relationships between these components, dependencies, requirements, and capabilities.
 
@@ -99,5 +101,24 @@ relationship_types:
           remove_source:
             description: Operation to notify the target node of a source node being removed from a relationship.
 ```
+
+## TOSCA extensions brought by Ystia
+
+### Standard Workflows automatic generation
+
+The specification defines two standard workflows :
+  * **install** used to deploy a topology.
+  * **uninstall** used to tear down a topology.
+  
+Ystia adds 2 additional default workflows:
+  * **stop** used in conjunction with the start workflow to stop all components a topology (for maintenance purpose for example).
+  * **start** sed in conjunction with the stop workflow to start all components of a topology.
+
+All these standard workflows will be automatically generated for you by Alien4Cloud, that will create workflow steps calling the standard interfaces of the components you have implemented (create/configure/start for the install workflow, stop/delete for the uninstall workflow), dependencies between steps being set according to the relationships between node templates that you have defined in your topology template.
+
+### Additional keyword
+
+### Jobs
+
 
 Next: [Description of the application](description.md)
