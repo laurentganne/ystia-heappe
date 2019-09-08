@@ -25,6 +25,6 @@ The following sections provide first an introduction to TOSCA, then a detailed d
   * [abstract types](doc/implementation.md#abstract-types)
   * [concrete types](doc/implementation.md#concrete-types)
   * [Application template](doc/implementation.md#application-template)
-* Using this template to create and deploy applications in Ystia
+* [Using this template to create and deploy applications in Ystia](doc/using_ystia.md)
   * through the UI
   * through the REST API
