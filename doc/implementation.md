@@ -311,7 +311,7 @@ A second section `node_templates` describes components part of this application 
         - associatedJob:
             type_requirement: job
             node: HEAppEJob
-            capability: tosca.capabilities.Node
+            capability: org.ystia.heappe.capabilities.pub.HeappeJob
             relationship: org.ystia.heappe.relationships.pub.DependsOnJob
     ReportComponent:
       type: org.ystia.heappe.components.bash.ReportComponent
@@ -319,7 +319,7 @@ A second section `node_templates` describes components part of this application 
         - associatedJob:
             type_requirement: job
             node: HEAppEJob
-            capability: tosca.capabilities.Node
+            capability: org.ystia.heappe.capabilities.pub.HeappeJob
             relationship: org.ystia.heappe.relationships.pub.DependsOnJob
 ```
 
