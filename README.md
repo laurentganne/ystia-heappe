@@ -13,6 +13,9 @@ Ystia front-end and orchestrator will just have here to execute the application 
 The following sections provide first an introduction to TOSCA, then a detailed description of the application, its implementation, and how to use it in Ystia:
 
 * [Introduction to TOSCA](doc/tosca_intro.md)
+  * [Specification](doc/tosca_intro.md#specification)
+  * [Extensions brought by Ystia](doc/tosca_intro.md#tosca-extensions-brought-by-ystia)
+    * [Jobs](doc/tosca_intro.md#jobs)
 * [Description of the application](doc/description.md)
 * [Implementation](doc/implementation.md)
   * [data types](doc/implementation.md#data-types)
