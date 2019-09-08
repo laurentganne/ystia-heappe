@@ -17,7 +17,7 @@ Each node template refers to a **Node Type** that defines the semantics of the n
 
 A **Relationship Template** specifies the occurrence of a relationship between nodes in a Topology Template. Each Relationship Template refers to a Relationship Type that defines the semantics of the relationship (properties, attributes, interfaces).
 
-In addition workflows (sometimes called plans) describe how the orchestrator will administrate the TOSCA application.
+In addition **workflows** (sometimes called plans) describe how the orchestrator will administrate the TOSCA application. A workflow is a collection of steps, a step can be a state change, the execution of a node interface, etc... And a step can be dependent on other steps.
 
 TOSCA specification defines normatives types, for which Ystia provides a built-in implementation, and from which the node types you will write will derive.
 
