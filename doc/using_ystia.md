@@ -35,4 +35,34 @@ Next section describe how to do it from Alien4Cloud UI.
 
 ## through the UI
 
+First login on Alien4Cloud as a user who has at least the following roles:
+* **COMPONENT_MANAGER** to upload new components in Alien4Cloud catalog
+* **ARCHITECT** to upload toplogy templates in Alien4Cloud catalog
+
+Then, from Alien4Cloud select menus **Catalog** > **Manage Archives**, you can either upload zip files, or upload a git repository :
+
+![Manage archives](images/1ManageArchivers.PNG)
+
+This is what we'll do here, clicking on **Git import**. A page appears where you can click on **Git location** to add a git location.
+Enter:
+* the repository: URL https://github.com/laurentganne/ystia-heappe.git
+* the branch: master
+like below :
+
+![Add git location](images/2AddGitLocation.PNG)
+
+
+Click on **+** to add this branch, then click on **Save** to add this git location.
+This page appears, click on **Import** to import components and the topology template in the catalog:
+
+![Import](images/3ImportLocation.PNG)
+
+If you select menus  **Catalog** > **Browse topologies**, you should now see in Alien4Cloud catalof the topology template provided by this repository:
+
+![Browse topologies](images/4TopologyInCatalog.PNG)
+
+Then to be able to create an application from this topology template, you need to login as a user who has the role **APPLICATION_MANAGER**.
+Select the menu ***Application** to have this page :
+
+
 ## through the REST API
