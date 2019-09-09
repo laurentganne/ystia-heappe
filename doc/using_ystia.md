@@ -114,14 +114,9 @@ Clicking on **Launch**, the workflow is launched and you can follow its progress
 
 ![workflowInProgress](images/16WorkflowInProgress.PNG)
 
+To view logs, you can click on tab **Logs** on the left hand side. For example here, logs from the **ReportComponent print_usage** printin resources usage of the job :
 
-
-
-
-
-
-
-
+![Logs](images/17WorkflowLogs.PNG)
 
 
 ## through the REST API
