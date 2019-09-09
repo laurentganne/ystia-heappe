@@ -45,8 +45,9 @@ Then, from Alien4Cloud select menus **Catalog** > **Manage Archives**, you can e
 
 This is what we'll do here, clicking on **Git import**. A page appears where you can click on **Git location** to add a git location.
 Enter:
-* the repository: URL https://github.com/laurentganne/ystia-heappe.git
+* the repository URL: https://github.com/laurentganne/ystia-heappe.git
 * the branch: master
+
 like below :
 
 ![Add git location](images/2AddGitLocation.PNG)
