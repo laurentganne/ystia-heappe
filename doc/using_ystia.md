@@ -73,6 +73,17 @@ Click on **New Application**, a popup appears where you need to provide a name f
 
 Click on **Create**, your application is created :
 
+![Application created](images/7AppTest.PNG)
+
+Click on the line Environment surrounded in green above, and a deployment wizard appears :
+
+![Deployment wizard](images/8DeploymentWizard.PNG)
+
+You could select the tab **Topology** to edit the toplogy if you need to change anything.
+Else select the tab **Inputs** to provide inputs, mandatory inputs appear in red :
+
+
+![Deployment wizard](images/9Inputs.PNG)
 
 
 
