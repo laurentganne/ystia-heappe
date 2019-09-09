@@ -65,5 +65,15 @@ If you select menus  **Catalog** > **Browse topologies**, you should now see in 
 Then to be able to create an application from this topology template, you need to login as a user who has the role **APPLICATION_MANAGER**.
 Select the menu ***Application** to have this page :
 
+![New Application](images/5NewApp.PNG)
+
+Click on **New Application**, a popup appears where you need to provide a name for the application, and select how to create it, from scratch (creating it graphically by dragging and dropping components from Alien4Cloud catalog in a topology editor), or from a topology template in the catalog, this is what we do here select the topology template we uploaded above :
+
+![Create Application](images/6NewAppFromTemplate.PNG)
+
+Click on **Create**, your application is created :
+
+
+
 
 ## through the REST API
