@@ -120,3 +120,6 @@ To view logs, you can click on tab **Logs** on the left hand side. For example h
 
 
 ## through the REST API
+
+To be completed.
+
