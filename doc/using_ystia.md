@@ -82,8 +82,20 @@ Click on the line Environment surrounded in green above, and a deployment wizard
 You could select the tab **Topology** to edit the toplogy if you need to change anything.
 Else select the tab **Inputs** to provide inputs, mandatory inputs appear in red :
 
-
 ![Deployment wizard](images/9Inputs.PNG)
+
+Once done, select tab **Location** and select the location where to deploy the application. Actually our application doesn't need any infrastructure resources to create on demand, this selection here will just select the orchestrator that will execute HEAppE commands :
+
+![Select location](images/10SelectLocation.PNG)
+
+Once done, click on tab **Review & Deploy**, you are ready to deploy the application :
+
+![Deploy](images/11Deploy.PNG)
+
+Click on **Deploy**, the deployment will take place, it will execute the **workflow**, which in our case will create a HEAppE job according the the job specification provided in input. Once done, this page appers describing the installation was successful :
+
+![Deployed](images/12Deployed.PNG)
+
 
 
 
