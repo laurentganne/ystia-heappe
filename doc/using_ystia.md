@@ -92,9 +92,34 @@ Once done, click on tab **Review & Deploy**, you are ready to deploy the applica
 
 ![Deploy](images/11Deploy.PNG)
 
-Click on **Deploy**, the deployment will take place, it will execute the **workflow**, which in our case will create a HEAppE job according the the job specification provided in input. Once done, this page appers describing the installation was successful :
+Click on **Deploy**, the deployment will take place, it will execute the **workflow**, which in our case will create a HEAppE job according to the job specification provided in input. Once done, this page appears describing the installation was successful :
 
 ![Deployed](images/12Deployed.PNG)
+
+If you select the tab **Workflow** on the left hand side, you can see the install workflow that was executed :
+
+![InstallWorkflow](images/13InstallWorkflow.PNG)
+
+The **create** interface of **HEAppEJob** was called, then the **start** interface as we didn't implement any **configure** interface. Then the **start** interfaces of both components having a dependency on  **HEAppEJob** are called in parallel.
+
+If, from the top right corner, you select the **run** workflow, you will see the automatically generated workflow chaining the **submit** and **run** of jobs **HEAppEJob** and **GetFilesJob** :
+
+![RunWorkflow](images/14RunWorkflow.PNG)
+
+If, from the top right corner, you select the **myWorkflow** workflow, you will see our user-defined workflow, where once **HEAppEJob** has been run, we execute in parallel the interface **print_usage** of **ReportComponent** and the **submit**/**run** interfaces of **GetFilesJobs** :
+
+![customWorkflow](images/15CustomWorkflow.PNG)
+
+Clicking on **Launch**, the workflow is launched and you can follow its progress. Here the **HEAppEJob submit** was executed successfuly (the job was submitted), and the **HEAppE run** is in progress (called periodically to get the job state, until the job is done) :
+
+![workflowInProgress](images/16WorkflowInProgress.PNG)
+
+
+
+
+
+
+
 
 
 
